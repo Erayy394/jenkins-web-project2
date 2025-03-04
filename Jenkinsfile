@@ -32,6 +32,18 @@ pipeline {
                     [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
                     [System.Console]::InputEncoding = [System.Text.Encoding]::UTF8
                     Write-Output "🚀 Starting the web server..."
+
+                    # Çalışma dizinini değiştirme
+                    $webDir = "C:\\Users\\Eray\\Desktop\\jenkins-web-project\\jenkins-web-project2"
+                    if (Test-Path $webDir) {
+                        Set-Location $webDir
+                        Write-Output "✅ Changed directory to: $webDir"
+                    } else {
+                        Write-Output "❌ ERROR: Directory not found: $webDir"
+                        exit 1
+                    }
+
+                    # Python HTTP sunucusunu başlat
                     Start-Process -NoNewWindow -FilePath "cmd.exe" -ArgumentList "/c start python -m http.server 8080"
                     Write-Output "✅ Website is running at http://localhost:8080"
                 '''
