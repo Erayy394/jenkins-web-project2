@@ -27,11 +27,13 @@ pipeline {
             steps {
                 echo '🚀 Web sitesi deploy ediliyor...'
                 powershell '''
+                    $PSDefaultParameterValues['Out-File:Encoding'] = 'utf8'
                     $OutputEncoding = [System.Text.Encoding]::UTF8
                     [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
-                    Write-Host "🚀 Web sitesi başlatılıyor..."
+                    [System.Console]::InputEncoding = [System.Text.Encoding]::UTF8
+                    Write-Output "🚀 Web sitesi başarıyla başlatılıyor..."
                     Start-Process -NoNewWindow -FilePath "cmd.exe" -ArgumentList "/c start python -m http.server 8080"
-                    Write-Host "✅ Web sitesi http://localhost:8080 adresinde çalışıyor."
+                    Write-Output "✅ Web sitesi http://localhost:8080 adresinde çalışıyor."
                 '''
             }
         }
