@@ -26,10 +26,8 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo '🚀 Web sitesi deploy ediliyor...'
-
-                // Python SimpleHTTPServer kullanarak localde çalıştırma
                 script {
-                    sh 'nohup python3 -m http.server 8080 &'
+                    powershell 'Start-Process -NoNewWindow -FilePath "cmd.exe" -ArgumentList "/c start python -m http.server 8080"'
                     echo '✅ Web sitesi http://localhost:8080 adresinde çalışıyor.'
                 }
             }
