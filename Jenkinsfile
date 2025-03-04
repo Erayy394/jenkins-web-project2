@@ -26,10 +26,13 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo '🚀 Web sitesi deploy ediliyor...'
-                script {
-                    powershell 'Start-Process -NoNewWindow -FilePath "cmd.exe" -ArgumentList "/c start python -m http.server 8080"'
-                    echo '✅ Web sitesi http://localhost:8080 adresinde çalışıyor.'
-                }
+                powershell '''
+                    chcp 65001 > nul
+                    [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+                    Write-Output "🚀 Web sitesi başlatılıyor..."
+                    Start-Process -NoNewWindow -FilePath "cmd.exe" -ArgumentList "/c start python -m http.server 8080"
+                    Write-Output "✅ Web sitesi http://localhost:8080 adresinde çalışıyor."
+                '''
             }
         }
     }
